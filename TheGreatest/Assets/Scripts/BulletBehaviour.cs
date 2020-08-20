@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class BulletBehaviour : MonoBehaviour
 {
-    [SerializeField] private Collider2D col;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private int bulletSpeed;
 
