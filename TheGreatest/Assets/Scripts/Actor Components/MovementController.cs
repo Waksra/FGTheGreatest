@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Actor_Components
 {
@@ -9,17 +10,24 @@ namespace Actor_Components
         
         private Transform _transform;
 
+        public Vector2 MoveVector { get; set; } = Vector2.zero;
+
         private void Awake()
         {
             _transform = GetComponent<Transform>();
         }
 
-        public void Move(Vector2 direction)
+        private void Update()
+        {
+            Move(MoveVector);
+        }
+
+        private void Move(Vector2 direction)
         {
             if(direction.sqrMagnitude > 1f)
                 direction.Normalize();
         
-            _transform.Translate(direction * moveSpeed);
+            _transform.Translate(direction * (moveSpeed * Time.deltaTime));
         }
     }
 }
