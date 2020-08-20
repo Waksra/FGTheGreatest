@@ -14,6 +14,13 @@ public class ObjectPooler : MonoBehaviour
 
     public List<ObjectPoolItem> itemsToPool;
     [SerializeField] private List<GameObject> pooledObjects;
+    
+    public enum PooledObjects
+    {
+        PlayerBullet,
+        EnemyBullet,
+        Enemy
+    }
 
     private void Awake()
     {
@@ -34,11 +41,11 @@ public class ObjectPooler : MonoBehaviour
         }        
     }
 
-    public GameObject GetPooledObject(string tag)
+    public GameObject GetPooledObject(PooledObjects tagEnum)
     {
         for (int i = 0; i < pooledObjects.Count; i++)
         {
-            if (!pooledObjects[i].activeInHierarchy && pooledObjects[i].tag == tag)
+            if (!pooledObjects[i].activeInHierarchy && pooledObjects[i].CompareTag(GetTagFromEnum(tagEnum)))
             {
                 return pooledObjects[i];
             }
@@ -46,7 +53,7 @@ public class ObjectPooler : MonoBehaviour
 
         foreach (ObjectPoolItem item in itemsToPool)
         {
-            if (item.objectToPool.tag == tag)
+            if (item.objectToPool.CompareTag(GetTagFromEnum(tagEnum)))
             {
                 if (item.shouldExpand)
                 {
@@ -59,5 +66,20 @@ public class ObjectPooler : MonoBehaviour
         }
 
         return null;
+    }
+
+    private string GetTagFromEnum(PooledObjects tagEnum)
+    {
+        switch (tagEnum)
+        {
+            case PooledObjects.PlayerBullet:
+                return "PlayerBullet";
+            case PooledObjects.EnemyBullet:
+                return "EnemyBullet";
+            case PooledObjects.Enemy:
+                return "Enemy";
+        }
+
+        return "";
     }
 }
