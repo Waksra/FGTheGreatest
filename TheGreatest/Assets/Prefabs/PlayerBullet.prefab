@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4536423341798298726}
   - component: {fileID: -6568203888699299525}
   - component: {fileID: 5524656542112028126}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerBullet
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}

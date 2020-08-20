@@ -13,8 +13,8 @@ public class BulletBehaviour : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Boundry Box")
-        {
+        if (!rb.IsTouchingLayers(1 << 10))
+        {            
             gameObject.SetActive(false);
         }
     }
