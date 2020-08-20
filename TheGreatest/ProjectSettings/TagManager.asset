@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Boundry Box
+  - Boundary Box
   - PlayerBullet
   - EnemyBullet
   - Enemy

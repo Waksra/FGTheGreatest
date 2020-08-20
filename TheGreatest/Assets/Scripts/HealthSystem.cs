@@ -37,6 +37,6 @@ public class HealthSystem : MonoBehaviour
     public void Damage(int amount)
     {
         Health -= amount;
-        Debug.Log(gameObject + " HealthSystem took " + amount + " damage and now has " + Health + " health left");
+        Debug.Log($"{gameObject} HealthSystem took {amount.ToString()} damage and now has {Health.ToString()} health left");
     }
 }
