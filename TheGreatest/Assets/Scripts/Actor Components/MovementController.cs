@@ -10,7 +10,25 @@ namespace Actor_Components
         
         private Transform _transform;
 
-        public Vector2 MoveVector { get; set; } = Vector2.zero;
+        private Vector2 _moveVector = Vector2.zero;
+
+        private event Action<int> HorizontalDirectionChangedEvent; 
+
+        public Vector2 MoveVector
+        {
+            get
+            {
+                return _moveVector;
+            }
+
+            set
+            {
+                if(Mathf.RoundToInt(value.x) != Mathf.RoundToInt(_moveVector.x))
+                    HorizontalDirectionChangedEvent?.Invoke(Mathf.RoundToInt(value.x));
+                
+                _moveVector = value;
+            }
+        }
 
         private void Awake()
         {
@@ -28,6 +46,16 @@ namespace Actor_Components
                 direction.Normalize();
         
             _transform.Translate(direction * (moveSpeed * Time.deltaTime));
+        }
+
+        public void SubscribeToHorizontalDirectionChangedEvent(Action<int> action)
+        {
+            HorizontalDirectionChangedEvent += action;
+        }
+        
+        public void UnsubscribeToHorizontalDirectionChangedEvent(Action<int> action)
+        {
+            HorizontalDirectionChangedEvent -= action;
         }
     }
 }
