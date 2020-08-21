@@ -3,14 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
+    public static SceneHandler SharedInstance;
     private int sceneIndex;
 
     private void Awake()
     {
+        SharedInstance = this;
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
-    private void SwitchScene()
+    public void SwitchScene()
     {
         switch (sceneIndex)
         {
@@ -24,6 +26,9 @@ public class SceneHandler : MonoBehaviour
 
             case 2: // EndScene
                 SceneManager.LoadScene(1);
+                break;
+            default:
+                SceneManager.LoadScene(0);
                 break;
         }
     }

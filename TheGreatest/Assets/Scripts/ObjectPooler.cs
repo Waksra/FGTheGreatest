@@ -19,6 +19,7 @@ public class ObjectPooler : MonoBehaviour
     {
         PlayerBullet,
         EnemyBullet,
+        TrippleShot,
         Enemy
     }
 
@@ -76,6 +77,8 @@ public class ObjectPooler : MonoBehaviour
                 return "PlayerBullet";
             case PooledObjects.EnemyBullet:
                 return "EnemyBullet";
+            case PooledObjects.TrippleShot:
+                return "TrippleShot";
             case PooledObjects.Enemy:
                 return "Enemy";
         }

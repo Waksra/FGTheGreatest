@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HealthSystem : MonoBehaviour
 {
+    public UnityEvent Death;
     [SerializeField] private int maxHealth;
     private int health;
     public int Health
@@ -18,9 +20,10 @@ public class HealthSystem : MonoBehaviour
             {
                 health = maxHealth;
             }
-            else if (value < 0)
+            else if (value <= 0)
             {
                 health = 0;
+                Death?.Invoke();
             }
             else
             {
@@ -29,7 +32,7 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         Health = maxHealth;
     }
