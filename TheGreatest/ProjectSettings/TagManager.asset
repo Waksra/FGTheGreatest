@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - TrippleShot
   - PowerUp
+  - ExplosionParticle
   layers:
   - Default
   - TransparentFX

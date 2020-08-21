@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
     public static SceneHandler SharedInstance;
+
+    [SerializeField] private float sceneSwitchTimer;
     private int sceneIndex;
 
     private void Awake()
@@ -31,5 +34,16 @@ public class SceneHandler : MonoBehaviour
                 SceneManager.LoadScene(0);
                 break;
         }
+    }
+
+    public void StartSceneSwitch()
+    {
+        StartCoroutine(WaitForSceneSwitch());
+    }
+
+    public IEnumerator WaitForSceneSwitch()
+    {
+        yield return new WaitForSeconds(sceneSwitchTimer);
+        SwitchScene();
     }
 }

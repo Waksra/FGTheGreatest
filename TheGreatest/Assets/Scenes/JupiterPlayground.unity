@@ -263,6 +263,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &919517408
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 961072076189465196, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_Name
+      value: EnemyBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
 --- !u!1001 &1205439317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -273,6 +330,18 @@ PrefabInstance:
     - target: {fileID: 389420353386308657, guid: 021b5d87f43e1ff40b5ed505e2ee5a51, type: 3}
       propertyPath: m_Name
       value: ObjectPooler
+      objectReference: {fileID: 0}
+    - target: {fileID: 389420353386308658, guid: 021b5d87f43e1ff40b5ed505e2ee5a51, type: 3}
+      propertyPath: itemsToPool.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 389420353386308658, guid: 021b5d87f43e1ff40b5ed505e2ee5a51, type: 3}
+      propertyPath: itemsToPool.Array.data[4].objectToPool
+      value: 
+      objectReference: {fileID: 2397218642872841332, guid: d1b50b6443b93614887e347c8cfc761b, type: 3}
+    - target: {fileID: 389420353386308658, guid: 021b5d87f43e1ff40b5ed505e2ee5a51, type: 3}
+      propertyPath: itemsToPool.Array.data[4].amountToPool
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 389420353386308659, guid: 021b5d87f43e1ff40b5ed505e2ee5a51, type: 3}
       propertyPath: m_LocalPosition.x
@@ -430,10 +499,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Death:
     m_PersistentCalls:
+      m_Calls: []
+  AfterDeath:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1657512256}
         m_TargetAssemblyTypeName: SceneHandler, Assembly-CSharp
-        m_MethodName: SwitchScene
+        m_MethodName: StartSceneSwitch
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -443,7 +515,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  maxHealth: 2
+  maxHealth: 1
+  deathEffect: 4
 --- !u!114 &1438246342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,6 +650,10 @@ PrefabInstance:
     - target: {fileID: 1976501793163300944, guid: 1e14bd4c89293d14590aaf05098467ba, type: 3}
       propertyPath: m_Name
       value: SceneHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976501793163300945, guid: 1e14bd4c89293d14590aaf05098467ba, type: 3}
+      propertyPath: sceneSwitchTimer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1976501793163300946, guid: 1e14bd4c89293d14590aaf05098467ba, type: 3}
       propertyPath: m_LocalPosition.x
