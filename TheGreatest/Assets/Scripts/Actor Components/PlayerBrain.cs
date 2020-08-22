@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Actor_Components
@@ -9,11 +8,15 @@ namespace Actor_Components
         private GameControls _controls;
         private MovementController _movementController;
         private ShootingController _shootingController;
+        private Transform _transform;
+
+        public static Vector2 PlayerPosition { get; private set; } = Vector2.zero;
 
         private void Awake()
         {
             _movementController = GetComponent<MovementController>();
             _shootingController = GetComponent<ShootingController>();
+            _transform = GetComponent<Transform>();
             
             _controls = new GameControls();
             
@@ -23,6 +26,11 @@ namespace Actor_Components
             _controls.Default.Shoot.performed += HandleShoot;
             
             _controls.Enable();
+        }
+
+        private void Update()
+        {
+            PlayerPosition = _transform.position;
         }
 
         private void HandleMove(InputAction.CallbackContext context)
