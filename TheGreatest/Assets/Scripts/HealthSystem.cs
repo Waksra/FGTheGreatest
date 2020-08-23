@@ -53,5 +53,6 @@ public class HealthSystem : MonoBehaviour
         obj.SetActive(true);
         AfterDeath?.Invoke();
         gameObject.SetActive(false);
+        Health = maxHealth;
     }
 }

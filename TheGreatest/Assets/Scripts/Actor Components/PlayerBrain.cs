@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Actor_Components
@@ -41,6 +42,14 @@ namespace Actor_Components
         private void HandleShoot(InputAction.CallbackContext context)
         {
             _shootingController.Shoot();
+        }
+
+        private void OnDestroy()
+        {
+            _controls.Default.Move.performed -= HandleMove;
+            _controls.Default.Move.canceled -= HandleMove;
+
+            _controls.Default.Shoot.performed -= HandleShoot;
         }
     }
 }

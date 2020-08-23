@@ -180,24 +180,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6452641ed8429a94882375ed39eaab63, type: 3}
---- !u!1 &573082593 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2654899746958063151, guid: 7cc73d50d6c6c2545b49918ea2b4bffb, type: 3}
-  m_PrefabInstance: {fileID: 1302637993}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &573082596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 573082593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f1cf2b1d07f93641bf69f5284b9335e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
 --- !u!1001 &1302637993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -205,14 +187,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2615470224736967207, guid: 7cc73d50d6c6c2545b49918ea2b4bffb, type: 3}
-      propertyPath: debug
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615470224736967207, guid: 7cc73d50d6c6c2545b49918ea2b4bffb, type: 3}
-      propertyPath: sweepDistance
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2654899746958063151, guid: 7cc73d50d6c6c2545b49918ea2b4bffb, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -524,6 +498,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1438246341, guid: 18024a6576fed2340a72208d9ca6476b, type: 3}
+      propertyPath: AfterDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8008540748690793402, guid: 18024a6576fed2340a72208d9ca6476b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
