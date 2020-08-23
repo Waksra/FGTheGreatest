@@ -395,6 +395,10 @@ PrefabInstance:
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: StartSceneSwitch
       objectReference: {fileID: 0}
+    - target: {fileID: 1438246341, guid: 18024a6576fed2340a72208d9ca6476b, type: 3}
+      propertyPath: maxHealth
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1448228689, guid: 18024a6576fed2340a72208d9ca6476b, type: 3}
       propertyPath: dealDamage.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -427,6 +431,10 @@ PrefabInstance:
       propertyPath: dealDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 8300000, guid: 987059469494d224b995db032b94a8c1, type: 3}
+    - target: {fileID: 7681716300538611475, guid: 18024a6576fed2340a72208d9ca6476b, type: 3}
+      propertyPath: m_Direction
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8008540748690793402, guid: 18024a6576fed2340a72208d9ca6476b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
