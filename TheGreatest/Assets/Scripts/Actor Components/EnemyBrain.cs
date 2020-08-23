@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Resources;
 using UnityEngine;
 
 namespace Actor_Components
@@ -7,10 +8,11 @@ namespace Actor_Components
     public class EnemyBrain : MonoBehaviour
     {
         public float idleDistance = 4.2f;
-        public float sweepDistance = 2f;
+        public Vector2 sweepPlayerDistances;
         
         public float evadeCooldown;
         public float sweepCooldown;
+        public float shootCooldown;
         
         public float circleCastRadius;
         public float circleCastDistance;
@@ -19,12 +21,13 @@ namespace Actor_Components
         
         [Space(10f)] public bool debug;
         
-        private const float SeekFrequency = 0.1f;
-        private const float DecideFrequency = 0.3f;
-        private const float ActFrequency = 0.6f;
+        private const float SeekFrequency = 0.05f;
+        private const float DecideFrequency = 0.1f;
+        private const float ActFrequency = 0.2f;
 
-        private float evadeTimer = 0f;
-        private float sweepTimer = 0f;
+        private float _evadeTimer = 0f;
+        private float _sweepTimer = 0f;
+        private float _shootTimer = 0f;
 
         private Actions _decidedAction = Actions.Idle;
         private Actions _currentAction = Actions.Idle;
@@ -32,12 +35,14 @@ namespace Actor_Components
         private Vector2 _playerPosition;
         private float _projectileDistance;
 
-        private bool isManeuver = false;
+        private bool _isManeuver;
+        private bool _canShoot = true;
 
         private RaycastHit2D _seekHit;
 
         private Transform _transform;
         private MovementController _movementController;
+        private ShootingController _shootingController;
 
         private enum Actions
         {
@@ -53,6 +58,7 @@ namespace Actor_Components
         {
             _transform = GetComponent<Transform>();
             _movementController = GetComponent<MovementController>();
+            _shootingController = GetComponent<ShootingController>();
         }
 
         private void Start()
@@ -81,6 +87,16 @@ namespace Actor_Components
                 {
                     _projectileDistance = -1;
                 }
+
+                if (!_canShoot)
+                {
+                    _shootTimer -= SeekFrequency;
+                    if (_shootTimer <= 0)
+                    {
+                        _canShoot = true;
+                        _shootTimer = shootCooldown;
+                    }
+                }
                 
                 yield return new WaitForSeconds(SeekFrequency);
             }
@@ -93,11 +109,11 @@ namespace Actor_Components
             
             while (true)
             {
-                if (_projectileDistance > -1 && evadeTimer <= 0)
+                if (_projectileDistance > -1 && _evadeTimer <= 0)
                 {
                     _decidedAction = Actions.Evade;
                 }
-                else if (_transform.position.y >= idleDistance && sweepTimer <= 0)
+                else if (_transform.position.y >= idleDistance && _sweepTimer <= 0)
                 {
                     _decidedAction = Actions.Sweep;
                 }
@@ -111,10 +127,10 @@ namespace Actor_Components
                 }
                 
 
-                if(evadeTimer > 0)
-                    evadeTimer -= DecideFrequency;
-                if (sweepTimer > 0)
-                    sweepTimer -= DecideFrequency;
+                if(_evadeTimer > 0)
+                    _evadeTimer -= DecideFrequency;
+                if (_sweepTimer > 0)
+                    _sweepTimer -= DecideFrequency;
                 
                 yield return new WaitForSeconds(DecideFrequency);
             }
@@ -127,29 +143,25 @@ namespace Actor_Components
             
             while (true)
             {
-                if(_decidedAction != _currentAction && !isManeuver)
+                if(_decidedAction != _currentAction && !_isManeuver)
                     switch (_decidedAction)
                     {
                         case Actions.Idle:
                             _currentAction = Actions.Idle;
                             _movementController.MoveVector = Vector2.zero;
-                            Debug.Log("Idle.");
                             break;
                         case Actions.MoveToIdle:
                             _currentAction = Actions.MoveToIdle;
-                            _movementController.MoveVector = Vector2.up;
-                            Debug.Log("Move to Idle.");
+                            StartCoroutine(MoveToIdleManeuver());
                             break;
                         case Actions.Sweep:
                             _currentAction = Actions.Sweep;
                             int direction = (int) Mathf.Sign(_playerPosition.x - _transform.position.x);
                             StartCoroutine(SweepManeuver(direction));
-                            Debug.Log("Sweep.");
                             break;
                         case Actions.Track:
                             break;
                         case Actions.Evade:
-                            Debug.Log("Evade.");
                             break;
                         case Actions.Flee:
                             break;
@@ -161,23 +173,96 @@ namespace Actor_Components
             // ReSharper disable once IteratorNeverReturns
         }
 
+        private IEnumerator MoveToIdleManeuver()
+        {
+            _isManeuver = true;
+            _movementController.MoveVector = Vector2.up;
+            while (_transform.position.y < idleDistance)
+            {
+                TryFireProjectile();
+                yield return null;
+            }
+            _movementController.MoveVector = Vector2.zero;
+            _transform.position.Set(_transform.position.x, idleDistance, _transform.position.z);
+
+            _isManeuver = false;
+        }
+
         private IEnumerator SweepManeuver(int direction)
         {
-            isManeuver = true;
+            _isManeuver = true;
+            float initialXPosition = _transform.position.x;
 
-            float distanceToSweep = idleDistance - sweepDistance;
-
-            while (_transform.position.y > sweepDistance + 0.5f || direction * (_transform.position.x + _playerPosition.x) <= 0)
+            while (_transform.position.y > _playerPosition.y && 
+                   Mathf.Abs(initialXPosition - _transform.position.x) < 
+                   Mathf.Abs(initialXPosition - (_playerPosition.x + sweepPlayerDistances.x * direction)))
             {
-                _movementController.MoveVector = Vector2.Lerp(Vector2.down,
+                _movementController.MoveVector = Vector3.Slerp(Vector2.down,
                     direction > 0 ? Vector2.right : Vector2.left,
-                    1 - ((_transform.position.y - sweepDistance) / distanceToSweep));
+                    1 - ((_transform.position.y - (_playerPosition.y + sweepPlayerDistances.y)) / 
+                        (idleDistance - (_playerPosition.y + sweepPlayerDistances.y))));
+                
+                TryFireProjectile();
                 
                 yield return null;
             }
 
-            sweepTimer = sweepCooldown;
-            isManeuver = false;
+            _sweepTimer = sweepCooldown;
+            _isManeuver = false;
+        }
+
+        private void TryFireProjectile()
+        {
+            if (!_canShoot)
+                return;
+            
+            _shootingController.Shoot();
+            _canShoot = false;
+        }
+
+        private void OnEnable()
+        {
+            Reset();
+            if (_transform.position.y > idleDistance)
+            {
+                _movementController.lockInBoundary = false;
+                StartCoroutine(MoveFromSpawn());
+            }
+        }
+
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+
+        private void Reset()
+        {
+            _decidedAction = Actions.Idle;
+            _currentAction = Actions.Idle;
+            _isManeuver = false;
+
+            _evadeTimer = 0;
+            _sweepTimer = 0;
+            _shootTimer = 0;
+
+            StartCoroutine(Seek());
+            StartCoroutine(Decide());
+            StartCoroutine(Act());
+        }
+
+        private IEnumerator MoveFromSpawn()
+        {
+            _isManeuver = true;
+            _movementController.MoveVector = Vector2.down;
+            while (_transform.position.y > idleDistance)
+            {
+                yield return null;
+            }
+            _movementController.MoveVector = Vector2.zero;
+            _transform.position.Set(_transform.position.x, idleDistance, _transform.position.z);
+
+            _movementController.lockInBoundary = true;
+            _isManeuver = false;
         }
 
         private void OnDrawGizmos()

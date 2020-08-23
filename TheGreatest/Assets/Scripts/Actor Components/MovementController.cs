@@ -5,8 +5,10 @@ namespace Actor_Components
 {
     public class MovementController : MonoBehaviour
     {
-        [SerializeField]
-        private float moveSpeed;
+        public float moveSpeed;
+        public bool lockInBoundary = true;
+
+        [Space(10)] public bool debug = false;
         
         private Transform _transform;
 
@@ -38,6 +40,9 @@ namespace Actor_Components
         private void Update()
         {
             Move(MoveVector);
+            
+            if (lockInBoundary)
+                SceneBoundary.MoveBackToBounds(transform);
         }
 
         private void Move(Vector2 direction)
