@@ -61,13 +61,6 @@ namespace Actor_Components
             _shootingController = GetComponent<ShootingController>();
         }
 
-        private void Start()
-        {
-            StartCoroutine(Seek());
-            StartCoroutine(Decide());
-            StartCoroutine(Act());
-        }
-
         private IEnumerator Seek()
         {
             yield return new WaitForSeconds(SeekFrequency);
