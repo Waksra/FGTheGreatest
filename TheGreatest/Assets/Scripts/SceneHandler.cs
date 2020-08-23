@@ -7,17 +7,17 @@ public class SceneHandler : MonoBehaviour
     public static SceneHandler SharedInstance;
 
     [SerializeField] private float sceneSwitchTimer;
-    private int sceneIndex;
+    private int _sceneIndex;
 
     private void Awake()
     {
         SharedInstance = this;
-        sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        _sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     public void SwitchScene()
     {
-        switch (sceneIndex)
+        switch (_sceneIndex)
         {
             case 0: // StartScene
                 SceneManager.LoadScene(1);

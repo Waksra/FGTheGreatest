@@ -102,10 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64bf43084bc2a214db8bd66931f66464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Death:
-    m_PersistentCalls:
-      m_Calls: []
-  AfterDeath:
+  deathEvent:
     m_PersistentCalls:
       m_Calls: []
   maxHealth: 2
@@ -170,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac3f07c3dd53d048b8a5cfbe8fd6923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DealDamage:
+  dealDamage:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3774391947223843551}
@@ -285,7 +282,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 23c3ea634d8551449986080643f20aa4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

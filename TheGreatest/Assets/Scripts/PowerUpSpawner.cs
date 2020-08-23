@@ -4,7 +4,7 @@ public class PowerUpSpawner : MonoBehaviour
 {
     [SerializeField] private float minTimeToSpawn;
     [SerializeField] private float maxTimeToSpawn;
-    private float timeToSpawn;
+    private float _timeToSpawn;
     [SerializeField] private ObjectPooler.PooledObjects powerUpToSpawn;
 
     private void Start()
@@ -14,9 +14,9 @@ public class PowerUpSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (timeToSpawn > 0f)
+        if (_timeToSpawn > 0f)
         {
-            timeToSpawn -= Time.deltaTime;
+            _timeToSpawn -= Time.deltaTime;
         }
         else
         {
@@ -33,6 +33,6 @@ public class PowerUpSpawner : MonoBehaviour
 
     private void SetTimeToSpawn()
     {
-        timeToSpawn = Random.Range(minTimeToSpawn, maxTimeToSpawn);
+        _timeToSpawn = Random.Range(minTimeToSpawn, maxTimeToSpawn);
     }
 }

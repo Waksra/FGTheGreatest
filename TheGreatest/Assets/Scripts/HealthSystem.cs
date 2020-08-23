@@ -1,36 +1,34 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+
 
 public class HealthSystem : MonoBehaviour
 {
-    public UnityEvent Death;
-    public UnityEvent AfterDeath;
+    public UnityEvent deathEvent;
     [SerializeField] private int maxHealth;
     [SerializeField] private ObjectPooler.PooledObjects deathEffect;
 
-    private int health;
+    private int _health;
     public int Health
     {
         get
         {
-            return health;
+            return _health;
         }
         set
         {
             if (value > maxHealth)
             {
-                health = maxHealth;
+                _health = maxHealth;
             }
             else if (value <= 0)
             {
-                health = 0;
+                _health = 0;
                 Die();
             }
             else
             {
-                health = value;
+                _health = value;
             }
         }
     }
@@ -51,7 +49,7 @@ public class HealthSystem : MonoBehaviour
         GameObject obj = ObjectPooler.SharedInstance.GetPooledObject(deathEffect);
         obj.transform.position = transform.position;
         obj.SetActive(true);
-        AfterDeath?.Invoke();
+        deathEvent?.Invoke();
         gameObject.SetActive(false);
         Health = maxHealth;
     }

@@ -3,11 +3,11 @@ using UnityEngine.Events;
 
 public class DamageEvent : MonoBehaviour
 {
-    public UnityEvent DealDamage;
+    public UnityEvent dealDamage;
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        DealDamage?.Invoke();
+        dealDamage?.Invoke();
         collision.gameObject.SetActive(false);
     }
 

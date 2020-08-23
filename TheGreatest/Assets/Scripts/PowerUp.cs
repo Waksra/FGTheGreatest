@@ -19,6 +19,7 @@ public class PowerUp : MonoBehaviour
     {
         startPosX = Random.Range(-5f, 5f);
         startPosition = new Vector3(startPosX, startPosY, 0f);
+        transform.position = startPosition;
     }
     private void Update()
     {
@@ -35,7 +36,7 @@ public class PowerUp : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             powerUpEvent?.Invoke();
-            collision.gameObject.GetComponent<Actor_Components.ShootingController>().ChangeProjectile(objectToFire, powerUpDuration);
+            collision.gameObject.GetComponentInParent<Actor_Components.ShootingController>().ChangeProjectile(objectToFire, powerUpDuration);
             gameObject.SetActive(false);
         }
         else
