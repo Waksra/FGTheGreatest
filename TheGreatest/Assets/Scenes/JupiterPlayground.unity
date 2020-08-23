@@ -280,7 +280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.88
+      value: 11.16
       objectReference: {fileID: 0}
     - target: {fileID: 961072076189465198, guid: b384823d17d3d814ca56e693abebffe2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -459,8 +459,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8008540748690793405, guid: 18024a6576fed2340a72208d9ca6476b, type: 3}
   m_PrefabInstance: {fileID: 1438246338}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &1438246340
-BoxCollider2D:
+--- !u!60 &1438246340
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -482,9 +482,22 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.96, y: 0.72}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.08660874, y: 0.37863064}
+      - {x: -0.089499556, y: 0.37820828}
+      - {x: -0.12344891, y: 0.118468076}
+      - {x: -0.35474342, y: -0.018461943}
+      - {x: -0.48720688, y: 0.070046425}
+      - {x: -0.46177447, y: -0.23785901}
+      - {x: -0.14092335, y: -0.28067136}
+      - {x: -0.06733084, y: -0.37388313}
+      - {x: 0.081551135, y: -0.3710389}
+      - {x: 0.13396344, y: -0.27027702}
+      - {x: 0.45735666, y: -0.251343}
+      - {x: 0.48206946, y: 0.061222553}
+      - {x: 0.35648295, y: -0.015306473}
+      - {x: 0.12344873, y: 0.118468225}
 --- !u!114 &1438246341
 MonoBehaviour:
   m_ObjectHideFlags: 0
